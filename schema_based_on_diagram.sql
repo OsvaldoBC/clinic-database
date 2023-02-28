@@ -4,3 +4,22 @@ CREATE TABLE patients(
   date_of_birth DATE,
   PRIMARY KEY(id)
 );
+
+CREATE TABLE medical_histories(
+  id INT GENERATED ALWAYS AS IDENTITY,
+  admitted_at TIMESTAMP,
+  patient_id INT,
+  CONSTRAINT patient_id_fk  FOREIGN KEY (patient_id) REFERENCES patients(id),
+  status VARCHAR(250),
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE invoices(
+  id INT GENERATED ALWAYS AS IDENTITY,
+  total_amount DECIMAL,
+  generated_at TIMESTAMP,
+  payed_at TIMESTAMP,
+  medical_history_id INT,
+  CONSTRAINT medical_history_id_fk FOREIGN KEY (medical_history_id) REFERENCES medical_histories(id),
+  PRIMARY KEY(id)
+);
